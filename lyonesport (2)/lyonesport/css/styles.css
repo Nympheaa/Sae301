@@ -1,0 +1,475 @@
+ /* Styles personnalisés */
+ body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+  }
+
+  .navbar {
+    background-color: #1d1d1d;
+  }
+
+
+/*LOGO*/
+  .navbar-brand img {
+    vertical-align: middle;
+    margin-right: 10px; 
+    width: 200px;
+    height: auto;
+  }
+
+  .hero {
+    background: url('../images/tournois.png') no-repeat center center/cover;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .section {
+    padding: 50px 20px;
+  }
+
+  .card {
+    background-color: #222;
+    border: none;
+    color: #fff;
+  }
+
+  .card img {
+    border-radius: 10px;
+  }
+
+
+
+
+
+
+
+
+
+
+  /*FOOTER*/
+  footer {
+    background-color: #1d1d1d;
+    padding: 20px 0;
+    text-align: center;
+    color: #bbb;
+  }
+
+
+
+
+
+
+
+
+
+
+/* FORMULAIRE */
+.form-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #2b2b2b;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #ff0000;
+  outline: none;
+}
+
+
+.checkbox-container {
+    display: flex; /* Utilise flexbox pour aligner les éléments */
+    gap: 15px; /* Ajoute un espacement entre les cases */
+    flex-wrap: wrap; /* Permet de passer à la ligne si l'espace manque */
+}
+
+.checkbox-container label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #fff; /* Couleur du texte */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 5px; /* Espacement entre la case et le texte */
+}
+
+/* Bouton Envoyer */
+.btn-submit {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #cc0000;
+}
+
+
+  .btn-red {
+    background-color: #ff0000;
+    color: #fff;
+  }
+
+  .btn-red:hover {
+    background-color: #cc0000;
+  }
+
+  
+
+
+
+
+
+
+
+  /*TITRE AVEC SOULIGNE ROUGE*/
+  .section-title {
+      text-align: center;
+      position: relative;
+      font-size: 2rem; /* Taille du titre */
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 300px; /* Longueur du trait rouge */
+      height: 3px; /* Épaisseur du trait rouge */
+      background-color: #ff0000; /* Couleur rouge */
+      margin: 10px auto 0; /* Espace autour du trait */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 1.5rem; /* Réduction de la taille du texte sur petits écrans */
+      }
+
+      .section-title::after {
+        width: 80px; /* Réduction de la longueur du trait */
+      }
+    }
+
+
+
+
+
+
+
+    /*ICONE RS FOOTER*/
+    .social-icon {
+      width: 30px; /* Taille de l'icône */
+      height: auto;
+      transition: transform 0.3s ease-in-out; /* Animation au survol */
+    }
+    
+    .social-icon:hover {
+      transform: scale(1.2); /* Effet zoom au survol */
+    }
+
+
+
+
+
+
+
+/* PAGE CONNEXION */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+header .logo img {
+  height: 40px;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Section Connexion */
+.connexion-section {
+  margin: 100px auto;
+  max-width: 400px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.red-line {
+  width: 80px;
+  height: 3px;
+  background-color: red;
+  margin: 0 auto 20px auto;
+}
+
+.connexion-form {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.connexion-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.connexion-form input:focus {
+  outline: none;
+  border: 2px solid red;
+}
+
+button {
+  background-color: red;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #cc0000;
+}
+
+
+
+
+/*PAGE MON COMPTE*/
+/* Section Mon Compte */
+.mon-compte-section {
+  margin: 50px auto;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.account-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.account-left, .account-right {
+  width: 25%;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+.account-left h2, .account-right h2 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.account-left ul, .account-right ul {
+  list-style: none;
+  padding: 0;
+}
+
+.account-left li, .account-right li {
+  margin-bottom: 10px;
+  color: #ddd;
+  font-size: 14px;
+}
+
+.account-center {
+  width: 45%;
+  background-color: #444;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.formulaire-compte input, .formulaire-compte select, .formulaire-compte textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.formulaire-compte button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  width: 100%;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.formulaire-compte button:hover {
+  background-color: #cc0000;
+}
+
+
+
+
+
+
+
+
+/*PAGIN ADMIN_DASHBOARD*/
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+
+header h1 {
+  text-align: center;
+  padding: 20px;
+  background-color: #111;
+  margin: 0;
+  border-bottom: 2px solid red;
+}
+
+.admin-section, .accepted-section {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.demande, .accepted-item {
+  background-color: #333;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+form button {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.accept-btn {
+  background-color: green;
+}
+
+.decline-btn {
+  background-color: red;
+}
+
+.login-container {
+  width: 300px;
+  margin: 100px auto;
+  text-align: center;
+  background-color: #222;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.login-container input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.login-container button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+}

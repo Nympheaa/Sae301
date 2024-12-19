@@ -451,3 +451,48 @@ footer {
   margin: 0 10px;
   font-size: 1.5rem;
 }
+
+
+/*PAGE ACCOUNT CLIENT*/
+
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+h1, h2, h3 {
+  color: white;
+}
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid red;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+.btn-red {
+  background-color: red;
+  color: white;
+  border: none;
+}
+.btn-red:hover {
+  background-color: darkred;
+}
+.btn-green {
+  background-color: green;
+  color: white;
+  border: none;
+}
+.btn-green:hover {
+  background-color: darkgreen;
+}
+.message-box {
+  background-color: #333;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.footer {
+  text-align: center;
+  margin-top: 30px;
+}

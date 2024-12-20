@@ -1,101 +1,132 @@
-<?php 
+<?php
+include("config/config.php");
+$bdd = new PDO('mysql:host=' . $hote . ';port=' . $port . ';dbname=' . $nom_bd, $identifiant, $mot_de_passe, $options);
 
-class partenaire {
-    public $NomPartenaire="";
-    public $typePartenaire="";
-    public $mail="";
-    public $telephone= 0;
-    protected $compte; // C'est pour la clé etrangère//
+class partenaire
+{
+    public $NomPartenaire = "";
+    public $typePartenaire = "";
+    public $mail = "";
+    public $telephone = 0;
+    public $numeroSiren = 0;
+    public $compte = "";
+    public $Id_partenaire = "";
 
-
-    public function __construct($nom, $type, $mail, $telephone, $compte) {
+    public function __construct($nom, $type, $mail, $telephone, $numeroSiren, $compte)
+    {
         $this->NomPartenaire = $nom;
         $this->typePartenaire = $type;
         $this->mail = $mail;
         $this->telephone = $telephone;
+        $this->numeroSiren = $numeroSiren;
         $this->compte = $compte;
+
+
     }
 
-    public function créeEvenement($evenement): void {
-        echo "L'événement " . $evenement . " a été créé par " . $this->NomPartenaire . ".\n";
+    public function listerEvenement($bdd): array
+    {
+        $evenements = [];
+        $requete = "SELECT evenement.Nom, evenement.Description, evenement.Date, evenement.Statut, typeevenement.Nom as eventNom
+        FROM evenement 
+        INNER JOIN participe ON evenement.id_Evenement = participe.Id_Evenement 
+        INNER JOIN  typeevenement ON evenement.Id_typeEvenement = typeevenement.Id_typeEvenement
+        WHERE participe.Id_Partenaire='$this->Id_partenaire'";
+
+        $resultats = $bdd->query($requete);
+        foreach ($resultats->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $event = new evenement($row['Nom'], $row['Description'], $row['Date'], $row['Statut'], $row['eventNom']);
+            array_push($evenements, $event);
+        }
+        return $evenements;
     }
 
-    public function participeEvenement($evenement): void {
-        echo $this->NomPartenaire . " participe à l'événement " . $evenement . ".\n";
+    public function initialiserPartenaire($bdd, $Id_compte): void
+    {
+        $requete = "SELECT * FROM partenaire WHERE Id_compte='$Id_compte'";
+        $resultats = $bdd->query($requete);
+        $res = $resultats->fetch(PDO::FETCH_ASSOC);
+        $this->NomPartenaire = $res['NomPartenaire'];
+        $this->typePartenaire = $res['TypePartenaire'];
+        $this->mail = $res['Mail'];
+        $this->telephone = $res['Telephone'];
+        $this->numeroSiren = $res['NumeroSiren'];
+        $this->Id_partenaire = $res['Id_partenaire'];
+
     }
 
-    public function afficherDetailsPartenaire(): void {
-        echo "Nom: " . $this->NomPartenaire . ", Type: " . $this->typePartenaire . "\n";
+
+
+    public function enregistrerCreation($bdd): void
+    {
+        $this->compte->enregistrerCreationCompte($bdd);
+        $requete_preparee = $bdd->prepare('INSERT INTO partenaire (NomPartenaire,TypePartenaire,Mail,Telephone,Id_compte,NumeroSiren) VALUES (:NomPartenaire,:TypePartenaire,:Mail,:Telephone,:Id_compte,:NumeroSiren)');
+        $requete_preparee->bindValue(':NomPartenaire', $this->NomPartenaire, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':TypePartenaire', $this->typePartenaire, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Mail', $this->mail, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Telephone', $this->telephone, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Id_compte', $bdd->lastInsertId(), PDO::PARAM_INT);
+        $requete_preparee->bindValue(':NumeroSiren', $this->numeroSiren, PDO::PARAM_STR);
+        $res = $requete_preparee->execute();
+
     }
 
-    public function modifierPartenaire(): void {
-        echo "Modification des informations du partenaire.\n";
-    }
 
 
 }
 
 
 
-class evenement {
-    public $nom="";
-    public $description="";
-    public $date=0;
-    public $statut="";
-    public $type = "";
-    protected $typeEvenement; //la clé etrangere
-    protected $compte; //la clé etrangere 
-    private $participants = []; // liasion je pense ? (chatGPT)
+class evenement
+{
+    public $nom = "";
+    public $description = "";
+    public $date = 0;
+    public $statut = "";
+    public $Id_typeEvenement;
+    public $Id_compte;
 
 
-    public function __construct($nom, $description, $date, $statut, $type, $typeEvenement, $compte) {
+
+    public function __construct($nom, $description, $date, $statut, $Id_typeEvenement)
+    {
         $this->nom = $nom;
         $this->description = $description;
         $this->date = $date;
         $this->statut = $statut;
-        $this->type = $type;
-        $this->typeEvenement = $typeEvenement;
-        $this->compte = $compte;
+        $this->Id_typeEvenement = $Id_typeEvenement;
     }
 
-    public function ajouterPartenaire($partenaire): void {
-        $this->participants[] = $partenaire;
-        echo "Partenaire ajouté: " . $partenaire->NomPartenaire . "\n";
-    }
+    public function enregistrerEvenement($bdd): void
 
-    public function supprimerPartenaire($partenaire): void {
-        foreach ($this->participants as $key => $p) {
-            if ($p === $partenaire) {
-                unset($this->participants[$key]);
-                echo "Partenaire supprimé: " . $partenaire->NomPartenaire . "\n";
-            }
+    {
+        // $requete 'SELECT * FROM typeevenement WHERE Nom='.$this->typeEvenement
+        $requete_preparee = $bdd->prepare('INSERT INTO evenement (Nom,Description,Date,Statut,Id_typeEvenement,) VALUES (:Nom,:Description,:Date,:Statut,:Id_TypeEvenement)');
+        $requete_preparee->bindValue(':Nom', $this->nom, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Description', $this->description, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Date', $this->date, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Statut', $this->statut, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Id_typeEvenement', $bdd->lastInsertId(), PDO::PARAM_INT);
+        $res = $requete_preparee->execute();
+        if ($res) {
+            echo "L'événement a été ajouté avec succès.";
+        } else {
+            echo "Erreur lors de l'ajout de l'événement.";
         }
-    }
-
-    public function modifierEvenement(): void {
-        echo "L'événement " . $this->nom . " a été modifié.\n";
-    }
-
-    public function afficherDetailsEvenement(): void {
-        echo "Nom: " . $this->nom . ", Description: " . $this->description . "\n";
-    }
-
-    public function listerParticipants(): void {
-        foreach ($this->participants as $partenaire) {
-            echo "Participant: " . $partenaire->NomPartenaire . "\n";
-        }
-    }
-
+    }   
 }
 
-class Compte {
+
+class Compte
+{
     public $identifiant = "";
     public $motDePasse = "";
     public $role = "";
     public $nom = "";
     public $prenom = "";
 
-    public function __construct($id, $mdp, $role, $nom, $prenom) {
+    public function __construct($id, $mdp, $role, $nom, $prenom)
+    {
         $this->identifiant = $id;
         $this->motDePasse = $mdp;
         $this->role = $role;
@@ -103,44 +134,40 @@ class Compte {
         $this->prenom = $prenom;
     }
 
-    public function seConnecter(): void {
-        echo $this->nom . " s'est connecté.\n";
+    public function seConnecter($bdd): bool
+    {
+
+        $requete = "SELECT * FROM compte WHERE identifiant=  '$this->identifiant'   AND MotDePasse= '$this->motDePasse'";
+        $resultats = $bdd->query($requete);
+
+
+        if ($resultats->rowCount() == 0) {
+            return 0;
+
+        } else {
+            $res = $resultats->fetch(PDO::FETCH_ASSOC);
+            $this->role = $res['Role'];
+            $this->nom = $res['Nom'];
+            $this->prenom = $res['Prenom'];
+            return $res['Id_compte'];
+
+        }
+
     }
 
-    public function modifierCompte(): void {
-        echo "Le compte de " . $this->nom . " a été modifié.\n";
-    }
 
-    public function supprimerEvenement($evenement): void {
-        echo "L'événement " . $evenement->nom . " a été supprimé.\n";
-    }
+    public function enregistrerCreationCompte($bdd)
+    {
+        $requete_preparee = $bdd->prepare('INSERT INTO compte (MotDePasse,Role,Prenom,Nom,Identifiant) VALUES (:MotDePasse,:Role,:Prenom,:Nom,:Identifiant)');
+        $requete_preparee->bindValue(':MotDePasse', $this->motDePasse, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Role', $this->role, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Prenom', $this->prenom, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Nom', $this->nom, PDO::PARAM_STR);
+        $requete_preparee->bindValue(':Identifiant', $this->identifiant, PDO::PARAM_STR);
+        $res = $requete_preparee->execute();
+        var_dump($bdd->lastInsertId());
 
-    public function creerEvenement($evenement): void {
-        echo "Création d'un événement: " . $evenement->nom . "\n";
-    }
+        echo $res;
 
-    public function gererEvenement($evenement): void {
-        echo "Gestion de l'événement: " . $evenement->nom . "\n";
-    }
-
-    public function afficherDetailsCompte(): void {
-        echo "Identifiant: " . $this->identifiant . ", Nom: " . $this->nom . ", Rôle: " . $this->role . "\n";
-    }
-}
-
-class TypeEvenement {
-    public $nom = "";
-
-    public function __construct($nom) {
-        $this->nom = $nom;
-    }
-
-    public function afficherTypeEvenement(): void {
-        echo "Type d'événement: " . $this->nom . "\n";
-    }
-
-    public function modifierTypeEvenement($nouveauNom): void {
-        $this->nom = $nouveauNom;
-        echo "Le type d'événement a été modifié en: " . $this->nom . "\n";
     }
 }

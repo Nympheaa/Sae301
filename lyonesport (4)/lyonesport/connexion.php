@@ -1,3 +1,10 @@
+<?php
+include ('config/config.php');
+$bdd = new PDO('mysql:host=' . $hote . ';port=' . $port . ';dbname=' . $nom_bd, $identifiant, $mot_de_passe, $options);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,7 +13,7 @@
   <title>Partenariats</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" type="text/css" rel="stylesheet" />
-  <link rel="icon" type="image/vnd.icon" href="images/favicon-16x16.png">
+  <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
 </head>
 <body>
 
@@ -14,7 +21,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
       <!-- Logo -->
-      <a class="navbar-brand" href="partenariats.html">
+      <a class="navbar-brand" href="partenariats.php">
           <img src="images/lyonesport.png" alt="Lyon Esport">
       </a>
       <!-- Bouton burger pour petits écrans -->
@@ -42,10 +49,10 @@
                   <a class="nav-link" href="#">À propos</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="partenariats.html">Partenariats</a>
+                  <a class="nav-link" href="partenariats.php">Partenariats</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="connexion.html">Se Connecter</a>
+                  <a class="nav-link" href="connexion.php">Se Connecter</a>
               </li>
           </ul>
       </div>
@@ -55,12 +62,13 @@
     <section class="connexion-section">
         <h1>Connectez-vous</h1>
         <div class="red-line"></div>
-        <form action="connexion.php" method="post" class="connexion-form">
+        <form action="verificationconnexion.php" method="post" class="connexion-form">
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="password" placeholder="Mot de passe" required>
             <button type="submit">CONNEXION</button>
         </form>
     </section>
+
 
 
     <footer>
